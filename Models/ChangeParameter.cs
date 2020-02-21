@@ -1,45 +1,43 @@
-﻿using Autodesk.Revit.DB;
+﻿using System;
+using System.Threading;
+using System.Windows.Threading;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WPFMonitorProgress.Controls;
+using WPFMonitorProgress.Views;
 
 namespace WPFMonitorProgress.Models
 {
-
     class ChangeParameter
     {
-        Wall CurrentWall { get; set; }
-        Controls.ProgressMonitorControl CurrentControl { get; set; }
-        Views.ProgressMonitorView CurrentUI { get; set; }
-        bool Cancel { get; set; }
-        private delegate void ProgressBarDelegate();
-
-        ExternalEvent ExternalEvent { get; set; }
-
         public ChangeParameter(Element wallElement)
         {
             CurrentWall = wallElement as Wall;
         }
+
+        Wall CurrentWall { get; }
+        ProgressMonitorControl CurrentControl { get; set; }
+        ProgressMonitorView CurrentUI { get; set; }
+        bool Cancel { get; set; }
+
+        ExternalEvent ExternalEvent { get; set; }
 
         public void ProgressModal()
         {
             if (CurrentWall == null)
                 throw new Exception("Selected Element is not a wall");
 
-            CurrentControl = new Controls.ProgressMonitorControl();
+            CurrentControl = new ProgressMonitorControl();
             CurrentControl.MaxValue = 100;
-            CurrentUI = new Views.ProgressMonitorView();
+            CurrentUI = new ProgressMonitorView();
             CurrentUI.DataContext = CurrentControl;
             CurrentUI.Closed += CurrentUI_Closed;
             CurrentUI.ContentRendered += FireUPModal;
 
             CurrentUI.ShowDialog();
         }
-        
-        private void FireUPModal(object sender, EventArgs e)
+
+        void FireUPModal(object sender, EventArgs e)
         {
             CurrentUI.ContentRendered -= FireUPModal;
             Parameter parameter = CurrentWall.get_Parameter(BuiltInParameter.DOOR_NUMBER);
@@ -52,12 +50,14 @@ namespace WPFMonitorProgress.Models
             using (Transaction t = new Transaction(CurrentWall.Document, "Process"))
             {
                 t.Start();
-                for (CurrentControl.CurrentValue = 0; CurrentControl.CurrentValue <= CurrentControl.MaxValue; ++CurrentControl.CurrentValue)
+                for (CurrentControl.CurrentValue = 0;
+                    CurrentControl.CurrentValue <= CurrentControl.MaxValue;
+                    ++CurrentControl.CurrentValue)
                 {
                     if (Cancel)
                         break;
 
-                    System.Threading.Thread.Sleep(50);
+                    Thread.Sleep(50);
 
                     try
                     {
@@ -69,26 +69,29 @@ namespace WPFMonitorProgress.Models
                         throw new Exception("Error trying to set Mark paramter");
                     }
 
-                    CurrentControl.CurrentContext = string.Format("progress {0} of {1} done", CurrentControl.CurrentValue, CurrentControl.MaxValue);
-                    CurrentUI.Dispatcher.Invoke(new ProgressBarDelegate(CurrentControl.NotifyUI), System.Windows.Threading.DispatcherPriority.Background);
-
+                    CurrentControl.CurrentContext = string.Format("progress {0} of {1} done",
+                        CurrentControl.CurrentValue, CurrentControl.MaxValue);
+                    CurrentUI.Dispatcher.Invoke(new ProgressBarDelegate(CurrentControl.NotifyUI),
+                        DispatcherPriority.Background);
                 }
-                t.Commit();
 
+                t.Commit();
             }
 
             CloseWindow();
         }
 
-        private void CloseWindow()
+        void CloseWindow()
         {
             CurrentUI.Closed -= CurrentUI_Closed;
             CurrentUI.Close();
         }
 
-        private void CurrentUI_Closed(object sender, EventArgs e)
+        void CurrentUI_Closed(object sender, EventArgs e)
         {
             Cancel = true;
         }
+
+        delegate void ProgressBarDelegate();
     }
 }

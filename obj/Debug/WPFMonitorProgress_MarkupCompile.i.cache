@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\API\WPFMonitorRevitAPI\WPFMonitorProgress\obj\Debug\
+D:\WPFMonitorRevitAPI\obj\Debug\
 WPFMonitorProgress
 none
 false
@@ -16,5 +16,5 @@ DEBUG;TRACE
 15-1118900859
 Views\ProgressMonitorView.xaml;
 
-True
+False
 

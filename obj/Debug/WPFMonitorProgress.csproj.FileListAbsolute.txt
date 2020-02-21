@@ -79,3 +79,15 @@ D:\API\WPFMonitorRevitAPI\WPFMonitorProgress\obj\Debug\WPFMonitorProgress.csproj
 D:\API\WPFMonitorRevitAPI\WPFMonitorProgress\obj\Debug\WPFMonitorProgress.csproj.CopyComplete
 D:\API\WPFMonitorRevitAPI\WPFMonitorProgress\obj\Debug\WPFMonitorProgress.dll
 D:\API\WPFMonitorRevitAPI\WPFMonitorProgress\obj\Debug\WPFMonitorProgress.pdb
+D:\WPFMonitorRevitAPI\bin\Debug\WPFMonitorProgress.dll
+D:\WPFMonitorRevitAPI\bin\Debug\WPFMonitorProgress.pdb
+D:\WPFMonitorRevitAPI\obj\Debug\Views\ProgressMonitorView.g.cs
+D:\WPFMonitorRevitAPI\obj\Debug\WPFMonitorProgress_MarkupCompile.cache
+D:\WPFMonitorRevitAPI\obj\Debug\WPFMonitorProgress_MarkupCompile.lref
+D:\WPFMonitorRevitAPI\obj\Debug\Views\ProgressMonitorView.baml
+D:\WPFMonitorRevitAPI\obj\Debug\WPFMonitorProgress.g.resources
+D:\WPFMonitorRevitAPI\obj\Debug\WPFMonitorProgress.Properties.Resources.resources
+D:\WPFMonitorRevitAPI\obj\Debug\WPFMonitorProgress.csproj.GenerateResource.cache
+D:\WPFMonitorRevitAPI\obj\Debug\WPFMonitorProgress.csproj.CoreCompileInputs.cache
+D:\WPFMonitorRevitAPI\obj\Debug\WPFMonitorProgress.dll
+D:\WPFMonitorRevitAPI\obj\Debug\WPFMonitorProgress.pdb
